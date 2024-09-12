@@ -170,8 +170,8 @@ cron.schedule('0 5 * * *', () => {
   timezone: "America/Sao_Paulo"
 });
 
-// Agendamento diário às 7h45 da manhã
-cron.schedule('45 7 * * *', () => {
+// Agendamento diário às 8hh00 da manhã
+cron.schedule('0 8 * * *', () => {
   console.log('Realizando procedimento de envio de email...');
   sendDailyNotification();
 }, {
