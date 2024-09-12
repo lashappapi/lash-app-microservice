@@ -154,6 +154,11 @@ const sendDailyNotification = async () => {
   }
 };
 
+// Endpoint para retornar o status do microserviço
+app.get('/api/status', (req, res) => {
+  res.status(200).json({ status: 'online' });
+});
+
 app.get('/api/get', async (req, res) => {
   const searchQuery = req.query.search ? req.query.search.toLowerCase() : '';
   try {
