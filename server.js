@@ -163,8 +163,15 @@ const sendDailyNotification = async () => {
 // });
 
 // Agendamento diário às 5h00 da manhã
-
 cron.schedule('0 5 * * *', () => {
+  console.log('Realizando procedimento de envio de email...');
+  sendDailyNotification();
+}, {
+  timezone: "America/Sao_Paulo"
+});
+
+// Agendamento diário às 7h45 da manhã
+cron.schedule('45 7 * * *', () => {
   console.log('Realizando procedimento de envio de email...');
   sendDailyNotification();
 }, {
@@ -184,4 +191,4 @@ app.listen(PORT, () => {
       .catch(error => {
         console.error('GET feito.');
       });
-  }, 5 * 60 * 1000);  // 1 minuto em milissegundos
+  }, 1 * 60 * 1000);  // 1 minuto em milissegundos
