@@ -154,6 +154,17 @@ const sendDailyNotification = async () => {
   }
 };
 
+app.get('/api/get', async (req, res) => {
+  const searchQuery = req.query.search ? req.query.search.toLowerCase() : '';
+  try {
+    const query = searchQuery ? { name: { $regex: searchQuery, $options: 'i' } } : {};
+    const clients = await db.collection('clients').find(query).toArray();
+    res.json({ clients });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Agendamento para teste a cada 10 segundos
 // cron.schedule('*/50 * * * * *', () => {  // '*/10 * * * * *' significa "a cada 10 segundos"
 //   console.log('Executando tarefa agendada para enviar notificação de teste a cada 50 segundos...');
@@ -162,16 +173,8 @@ const sendDailyNotification = async () => {
 //   timezone: "America/Sao_Paulo" // Defina o fuso horário desejado
 // });
 
-// Agendamento diário às 5h00 da manhã
+// Agendamento Correto
 cron.schedule('0 5 * * *', () => {
-  console.log('Realizando procedimento de envio de email...');
-  sendDailyNotification();
-}, {
-  timezone: "America/Sao_Paulo"
-});
-
-// Agendamento diário às 8hh00 da manhã
-cron.schedule('0 8 * * *', () => {
   console.log('Realizando procedimento de envio de email...');
   sendDailyNotification();
 }, {
@@ -184,7 +187,7 @@ app.listen(PORT, () => {
 
 // Rota fake de GET para manter a conexão
   setInterval(() => {
-    axios.get(`${process.env.API_BASE_URL}/api/get`)
+    axios.get(`https://lash-app-microservice.onrender.com/api/get`)
       .then(response => {
         console.log('GET realizado com sucesso');
       })
