@@ -192,7 +192,7 @@ app.listen(PORT, () => {
 
 // Rota fake de GET para manter a conexão
   setInterval(() => {
-    axios.get(`https://lash-app-microservice.onrender.com/api/get`)
+    axios.get(`https://lash-app-microservice-9isb.onrender.com/api/get`)
       .then(response => {
         console.log('GET realizado com sucesso');
       })
